@@ -38,7 +38,7 @@ export default function GoLiveForm() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const res = await fetch("https://formspree.io/f/mkovalpz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

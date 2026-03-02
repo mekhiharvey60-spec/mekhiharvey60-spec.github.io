@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --deep-navy: #0D2235;
+  --deep-navy-light: #0E2A3A;
+  --rich-red: #C53A32;
+  --warm-orange: #B87D28;
+  --golden-yellow: #C28B30;
+  --studio-cyan: #12A3B4;
+  --soft-cream: #E9E2BC;
+  --ink: #0A0A0A;
+
+  /* Studio Mode tokens — default: dark (control room) */
+  --studio-bg: #080808;
+  --studio-surface: #111111;
+  --studio-panel: #0D2235;
+  --studio-text: #E9E2BC;
+  --studio-muted: rgba(233, 226, 188, 0.45);
+  --studio-border: rgba(194, 139, 48, 0.18);
+  --studio-accent: #C28B30;
+  --studio-red: #C53A32;
+  --studio-cyan: #12A3B4;
+}
+
+/* Daylight mode overrides */
+[data-studio="light"] {
+  --studio-bg: #F5F4EF;
+  --studio-surface: #FFFFFF;
+  --studio-panel: #EEF2F8;
+  --studio-text: #0A0A0A;
+  --studio-muted: rgba(10, 10, 10, 0.5);
+  --studio-border: rgba(13, 34, 53, 0.12);
+  --studio-accent: #0D2235;
+  --studio-red: #C53A32;
+  --studio-cyan: #12A3B4;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink antialiased;
+  }
+
+  ::selection {
+    background-color: #C28B3028;
+    color: #0A0A0A;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-golden-yellow text-deep-navy px-7 py-3 text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:bg-warm-orange hover:gap-3;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border border-white text-white px-7 py-3 text-sm font-semibold tracking-widest uppercase transition-all duration-300 hover:bg-white hover:text-deep-navy hover:gap-3;
+  }
+
+  .btn-outline-dark {
+    @apply inline-flex items-center gap-2 border border-ink text-ink px-7 py-3 text-sm font-semibold tracking-widest uppercase transition-all duration-300 hover:bg-ink hover:text-white hover:gap-3;
+  }
+
+  .section-label {
+    @apply text-golden-yellow text-xs font-semibold tracking-[0.2em] uppercase mb-3;
+  }
+
+  .divider-gold {
+    @apply w-12 h-0.5 bg-golden-yellow;
+  }
+
+  .divider-burgundy {
+    @apply w-12 h-0.5 bg-[#C53A32];
+  }
+
+  .divider-orange {
+    @apply w-12 h-0.5 bg-[#B87D28];
+  }
+
+  .divider-cream {
+    @apply w-12 h-0.5 bg-[#E9E2BC];
+  }
+}
+
+/* Animated underline for nav links — studio-cyan for active/hover */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #12A3B4;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Fade-in animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.fade-up-delay-2 { animation-delay: 0.25s; opacity: 0; }
+.fade-up-delay-3 { animation-delay: 0.4s; opacity: 0; }
+.fade-up-delay-4 { animation-delay: 0.55s; opacity: 0; }
+
+/* Bronze shimmer animation */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-border-animate {
+  background: linear-gradient(
+    90deg,
+    #C28B30 0%,
+    #D9A040 50%,
+    #C28B30 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+.red-border-animate {
+  background: linear-gradient(
+    90deg,
+    #C53A32 0%,
+    #D45850 50%,
+    #C53A32 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+.orange-border-animate {
+  background: linear-gradient(
+    90deg,
+    #B87D28 0%,
+    #CA9232 50%,
+    #B87D28 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+.cream-border-animate {
+  background: linear-gradient(
+    90deg,
+    #E9E2BC 0%,
+    #F3EDD4 50%,
+    #E9E2BC 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── BROADCAST / CINEMATIC ANIMATIONS ── */
+
+/* News ticker */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker var(--ticker-duration, 32s) linear infinite;
+  white-space: nowrap;
+  display: inline-flex;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Scan line overlay */
+@keyframes scanline-move {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.scanline-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(194, 139, 48, 0.06) 50%,
+    transparent 100%
+  );
+  height: 120px;
+  animation: scanline-move 3s linear infinite;
+}
+
+/* Broadcast noise / static */
+@keyframes static-noise {
+  0%   { opacity: 0.025; }
+  25%  { opacity: 0.045; }
+  50%  { opacity: 0.02; }
+  75%  { opacity: 0.05; }
+  100% { opacity: 0.025; }
+}
+.broadcast-noise {
+  animation: static-noise 0.08s steps(1) infinite;
+}
+
+/* REC dot blink */
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+.rec-dot {
+  animation: rec-pulse 1s ease-in-out infinite;
+}
+
+/* Signal bar fill (for SkillsDashboard) */
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Custom cursor — hide OS cursor globally when class active */
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active [role="button"] {
+  cursor: none !important;
+}
+
+/* Section scan line divider */
+.scanline-divider {
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+}
+.scanline-divider::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, #C28B30, transparent);
+  transform: translateX(-100%);
+  animation: sweep-right 2s ease-out forwards;
+}
+@keyframes sweep-right {
+  to { transform: translateX(100%); }
+}
